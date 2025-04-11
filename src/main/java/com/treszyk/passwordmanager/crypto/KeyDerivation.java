@@ -44,12 +44,14 @@ public class KeyDerivation {
         try {
             factory = SecretKeyFactory.getInstance(Constants.KEY_DERIVATION_ALGORITHM);
         } catch (NoSuchAlgorithmException e) {
+            System.out.println("The derivation algorithm could not be found, check settings: " + e);
             throw new RuntimeException(e);
         }
         SecretKey tmp;
         try {
             tmp = factory.generateSecret(spec);
         } catch (InvalidKeySpecException e) {
+            System.out.println("Invalid key specifications: " + e);
             throw new RuntimeException(e);
         }
         Arrays.fill(masterPass, '\0');
