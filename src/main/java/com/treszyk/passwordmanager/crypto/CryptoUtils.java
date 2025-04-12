@@ -27,13 +27,12 @@ public class CryptoUtils {
     }
 
     public static String decodeByteArrayToReadableString(byte[] byteArray) {
-        //this method is kinda worthless since it's so easy to convert bytearray to string
         return new String(byteArray, StandardCharsets.UTF_8);
     }
 
     //returns the encrypted password with the unique IV
     public static String encryptPassword(String userPassword, SecretKey masterKey) {
-        byte[] iv = generateIV();
+        byte[] iv = generateIV(); //generating a random IV that will be stored alongside the encrypted password
 
         Cipher cipher;
         try {
