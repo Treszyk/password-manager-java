@@ -12,7 +12,7 @@ public class JwtUtil {
 
     private static final long EXPIRATION_TIME = 1000 * 60 * 15; // 15 minutes
 
-    private final Key key = Keys.hmacShaKeyFor("supersecretkey-supersecretkey-1234".getBytes()); // this string would have to be changed for actual production
+    private final Key key = Keys.hmacShaKeyFor("supersecretkey-supersecretkey-1234".getBytes()); // this string should be changed for actual production
 
     public String generateToken(String username) {
         return Jwts.builder()

@@ -1,9 +1,6 @@
 package com.treszyk.passwordmanager.controller;
 
-import com.treszyk.passwordmanager.dto.LoginRequest;
-import com.treszyk.passwordmanager.dto.LoginResponse;
-import com.treszyk.passwordmanager.dto.RegisterRequest;
-import com.treszyk.passwordmanager.dto.RegisterResponse;
+import com.treszyk.passwordmanager.dto.*;
 import com.treszyk.passwordmanager.model.User;
 import com.treszyk.passwordmanager.service.UserService;
 import com.treszyk.passwordmanager.security.JwtUtil;
@@ -13,7 +10,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -63,5 +62,23 @@ public class UserController {
     @GetMapping("/find/{username}")
     public Optional<User> getUserByUsername(@PathVariable String username) {
         return userService.findByUsername(username);
+    }
+
+    @GetMapping("/me/debug")
+    public ResponseEntity<?> getCurrentUserDebug(@AuthenticationPrincipal UserDetails userDetails) {
+        if (userDetails == null) {
+            return ResponseEntity.status(401).body("Unauthorized");
+        }
+
+        User user = userService.findByUsername(userDetails.getUsername())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        return ResponseEntity.ok(new UserDebugResponse(
+                user.getId(),
+                user.getUsername(),
+                user.getPassword(),
+                user.getMasterSalt(),
+                user.isMasterPasswordSet()
+        ));
     }
 }

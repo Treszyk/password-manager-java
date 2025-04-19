@@ -101,4 +101,15 @@ public class CryptoUtils {
         secureRandom.nextBytes(iv);
         return iv;
     }
+
+    public static boolean isCorrectVaultKey(String encryptedCheck, SecretKey key) {
+        try {
+            String[] parts = encryptedCheck.split(",");
+            if (parts.length != 2) return false;
+            String decrypted = decryptPassword(parts[0], key, parts[1]);
+            return "vault-check".equals(decrypted);
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

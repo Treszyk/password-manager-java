@@ -14,6 +14,12 @@ public class User {
     private String password;
     private String masterSalt;
 
+    @Column(nullable = false)
+    private boolean masterPasswordSet = false;
+
+    @Column(nullable = true)
+    private String vaultCheckEncrypted;
+
     public User() {}
 
     public User(String username, String password) {
@@ -44,5 +50,29 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getMasterSalt() {
+        return masterSalt;
+    }
+
+    public void setMasterSalt(String masterSalt) {
+        this.masterSalt = masterSalt;
+    }
+
+    public boolean isMasterPasswordSet() {
+        return masterPasswordSet;
+    }
+
+    public void setMasterPasswordSet(boolean masterPasswordSet) {
+        this.masterPasswordSet = masterPasswordSet;
+    }
+
+    public String getVaultCheckEncrypted() {
+        return vaultCheckEncrypted;
+    }
+
+    public void setVaultCheckEncrypted(String vaultCheckEncrypted) {
+        this.vaultCheckEncrypted = vaultCheckEncrypted;
     }
 }

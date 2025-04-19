@@ -32,9 +32,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/api/users/register", "/api/users/login")
-                )
+                .csrf(AbstractHttpConfigurer::disable)//remember to turn csrf on again before starting frontend
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/api/users/register",
