@@ -6,7 +6,8 @@ import java.security.SecureRandom;
 
 public class SaltGenerator {
     public static byte[] generateSalt(int length) {
-        //add a check to see if salt.dat isn't empty!@!@!
+        //add a check to see if salt.dat isn't empty!@!@
+        //DON'T ADD ANY CHECKS JUST DELETE FILE HANDLING SINCE IT'S NO LONGER NEEDED
         if(FileUtils.fileExists(Constants.SALT_PATH)) {
             System.out.println("Decoded an already existing salt!");
             return CryptoUtils.decodeBase64ToByteArray(FileUtils.readBase64FromFile(Constants.SALT_PATH));

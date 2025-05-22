@@ -27,13 +27,12 @@ public class CryptoUtils {
     }
 
     public static String decodeByteArrayToReadableString(byte[] byteArray) {
-        //this method is kinda worthless since it's so easy to convert bytearray to string
         return new String(byteArray, StandardCharsets.UTF_8);
     }
 
     //returns the encrypted password with the unique IV
     public static String encryptPassword(String userPassword, SecretKey masterKey) {
-        byte[] iv = generateIV();
+        byte[] iv = generateIV(); //generating a random IV that will be stored alongside the encrypted password
 
         Cipher cipher;
         try {
@@ -101,5 +100,16 @@ public class CryptoUtils {
         SecureRandom secureRandom = new SecureRandom();
         secureRandom.nextBytes(iv);
         return iv;
+    }
+
+    public static boolean isCorrectVaultKey(String encryptedCheck, SecretKey key) {
+        try {
+            String[] parts = encryptedCheck.split(",");
+            if (parts.length != 2) return false;
+            String decrypted = decryptPassword(parts[0], key, parts[1]);
+            return "vault-check".equals(decrypted);
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

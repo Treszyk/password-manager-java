@@ -7,7 +7,7 @@ import com.treszyk.passwordmanager.util.FileUtils;
 import javax.crypto.SecretKey;
 import java.util.Scanner;
 
-public class VaultManager {
+public class    VaultManager {
     private final SecretKey masterKey;
 
     public VaultManager(SecretKey masterKey) {
